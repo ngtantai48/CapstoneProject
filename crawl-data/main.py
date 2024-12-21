@@ -45,7 +45,7 @@ async def lifespan(app: FastAPI):
 async def crawl_facebook(driver):
     driver.get("https://www.facebook.com/login/")
     sleep(3)
-    cookies = pickle.load(open("cookies_fb.pkl", "rb"))
+    cookies = pickle.load(open(".\\cookies\\cookies_fb.pkl", "rb"))
     for cookie in cookies:
         driver.add_cookie(cookie)
     await facebook.get_facebook(
@@ -56,18 +56,10 @@ async def crawl_facebook(driver):
 async def crawl_vieclam24h(driver):
     driver.get("https://vieclam24h.vn/")
     sleep(3)
-    cookies = pickle.load(open("cookies_vieclam24h.pkl", "rb"))
+    cookies = pickle.load(open(".\\cookies\\cookies_vieclam24h.pkl", "rb"))
     for cookie in cookies:
         driver.add_cookie(cookie)
     return await get_vieclam24(driver, 3)
-
-
-def crawl_topdev(driver):
-    driver.get("https://topdep.vn/")
-    sleep(3)
-    cookies = pickle.load(open("cookies_topdev.pkl", "rb"))
-    for cookie in cookies:
-        driver.add_cookie(cookie)
 
 
 async def _start_vieclam24h():
@@ -76,6 +68,7 @@ async def _start_vieclam24h():
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--enable-unsafe-swiftshader")
     chrome_options.add_argument("--remote-debugging-port=9222")
     try:
         crawl_status = "PROCESSING"
@@ -106,6 +99,7 @@ async def _start_facebook():
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--enable-unsafe-swiftshader")
     chrome_options.add_argument("--disable-gpu")
     chrome_options.add_argument("--remote-debugging-port=9222")
     try:

@@ -40,7 +40,7 @@ def is_duplicate_data(link):
         return False
 
 
-def get_data_from_DB():
+def get_data_from_DB(my_user, my_password):
     try:
         # create_database_if_not_exists(my_user, my_password)
         # create_table_if_not_exists()
