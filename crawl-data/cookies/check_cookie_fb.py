@@ -1,11 +1,10 @@
 import requests
 import pickle
+from selenium import webdriver
 
 COOKIE_FB = "cookies_fb.pkl"
-COOKIE_VIECLAM24H = "cookies_vieclam24h.pkl"
 
 TEST_URL_FB = "https://www.facebook.com/me"
-TEST_URL_VIECLAM24H = "https://vieclam24h.vn/taikhoan/profile"
 
 
 def load_cookies(file_path):
@@ -14,6 +13,14 @@ def load_cookies(file_path):
 
 
 def check_cookie(cookies):
+    chrome_options = webdriver.ChromeOptions()
+    # chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--enable-unsafe-swiftshader")
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--remote-debugging-port=9222")
+    
     session = requests.Session()
     for cookie in cookies:
         session.cookies.set(cookie["name"], cookie["value"])

@@ -21,12 +21,13 @@ from get_24 import (
     get_Time_24,
     get_Place_24,
     get_Age_24,
-    get_probation,
+    # get_probation,
     get_Sex_24,
-    get_Way_24,
-    get_right_24,
+    # get_Way_24,
+    # get_right_24,
 )
-from ai import detect
+
+# from ai import detect
 from urllib.parse import urlparse
 from ws_handler import sio
 
@@ -38,7 +39,7 @@ def get_profile_urls_24(driver, url):
         f.write(str(page_source))
     try:
         class_name = "relative lg:h-[115px] w-full flex rounded-sm border lg:mb-3 mb-2 lg:hover:shadow-md !hover:bg-white !bg-[#FFF5E7] border-se-blue-10"
-        a = page_source.find_all("a", class_=class_name)
+        a = page_source.find_all("a", target="_blank")
         all_profile_urls = []
         for profile in a:
             profile_url = "https://vieclam24h.vn" + profile.get("href")
@@ -66,7 +67,9 @@ def get_profile_info_24(driver, url):
         title = get_title_24(page_source)
         date = get_Date_24(page_source)
         salary = get_Salary_24(page_source)
-        exp_year = get_Exp_24(page_source)
+        exp_year = get_Exp_24(
+            page_source
+        )  # sua lai vi tri cho dung de lay yeu cau kinh nghiem
         level = get_level_24(page_source)
         num_of_employee = get_NumEmployee_24(page_source)
         edu = get_Edu_24(page_source)
@@ -79,23 +82,23 @@ def get_profile_info_24(driver, url):
         requirement = get_Requirement_24(page_source)
         job = get_job_24(page_source)
         time = convertDateToTimestamp(get_Time_24(page_source))  # new
-        place = get_Place_24(page_source)
         age = get_Age_24(page_source)
         sex = get_Sex_24(page_source)
-        probation = get_probation(page_source)
-        way = get_Way_24(page_source)
-        right = get_right_24(page_source)
+        # place = get_Place_24(page_source)
+        # probation = get_probation(page_source)
+        # way = get_Way_24(page_source)
+        # right = get_right_24(page_source)
         type = "vieclam24h"
-        major_category_id = int(detect(title))
+        # major_category_id = int(detect(title))
         return [
             title,
             company_name,
             time,
-            place,
+            # place,
             age,
             sex,
-            probation,
-            way,
+            # probation,
+            # way,
             job,
             head_quater,
             num_of_employee,
@@ -103,14 +106,14 @@ def get_profile_info_24(driver, url):
             level,
             salary,
             edu,
-            right,
+            # right,
             description,
             requirement,
             date,
             src_pic,
             link,
             type,
-            major_category_id,
+            # major_category_id,
         ]
     except Exception as e:
         logger.error(f"Error occurred while scraping data from {url}: {e}")
@@ -137,11 +140,10 @@ async def get_vieclam24(driver, num_pages):
         page_start = 1
         data = []
         while page_start <= num_pages:
-            url = f"https://vieclam24h.vn/tim-kiem-viec-lam-nhanh?page={page_start}&sort_q="
+            url = f"https://vieclam24h.vn/tim-kiem-viec-lam-nhanh?occupation_ids[]=8&page={page_start}&province_ids[]=136&sort_q="
             print(">>>URL", url)
-            await sio.emit("log", url)
+            # await sio.emit("log", url)
             driver.get(url)
-            sleep(2)
             profile_urls = get_profile_urls_24(driver, url)
             data_DB = get_data_from_DB("root", "04082001")
             for _url in profile_urls:

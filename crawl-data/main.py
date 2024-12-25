@@ -14,7 +14,7 @@ from ws_handler import sio, socket_app, status_handler
 from webdriver_manager.chrome import ChromeDriverManager
 from contextlib import asynccontextmanager
 from get_info import get_vieclam24
-from database import save_data_into_DB
+import database
 
 
 app = FastAPI(title="HANDLE CRAWL DATA")
@@ -56,15 +56,15 @@ async def crawl_facebook(driver):
 async def crawl_vieclam24h(driver):
     driver.get("https://vieclam24h.vn/")
     sleep(3)
-    cookies = pickle.load(open(".\\cookies\\cookies_vieclam24h.pkl", "rb"))
-    for cookie in cookies:
-        driver.add_cookie(cookie)
+    # cookies = pickle.load(open(".\\cookies\\cookies_vieclam24h.pkl", "rb"))
+    # for cookie in cookies:
+    #     driver.add_cookie(cookie)
     return await get_vieclam24(driver, 3)
 
 
 async def _start_vieclam24h():
     chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument("--headless")
+    # chrome_options.add_argument("--headless")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--disable-gpu")
@@ -80,7 +80,7 @@ async def _start_vieclam24h():
         driver = webdriver.Chrome(service=service, options=chrome_options)
 
         data = await crawl_vieclam24h(driver)
-        save_data_into_DB(data)
+        database.save_data_into_DB(data)
 
         await sio.emit("broadcast", "END")
     except Exception as e:

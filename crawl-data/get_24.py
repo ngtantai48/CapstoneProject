@@ -22,37 +22,37 @@ def get_headquater_24(source):
 
 
 def get_NumEmployee_24(source):
-    div = source.find_all(
-        "div", class_="jsx-d84db6a84feb175e md:flex md:border-b border-[#DDD6FE] mb-4"
-    )
-    if len(div[1].find_all("div", class_="flex items-center mb-4 md:w-[33%]")) == 1:
-        num_div = div[1].find("div", class_="flex items-center mb-4 md:w-[33%]")
-        num_of_employee = num_div.find("p", class_="text-14").get_text(" ", strip=True)
-    elif len(div[1].find_all("div", class_="flex items-center mb-4 md:w-[33%]")) == 2:
-        num_div = div[1].find_all("div", class_="flex items-center mb-4 md:w-[33%]")
-        num_of_employee = (
-            num_div[1].find("p", class_="text-14").get_text(" ", strip=True)
-        )
-    return num_of_employee
+    # div = source.find_all(
+    #     "div", class_="flex items-center mb-4 md:w-[33%]"
+    # )
+    # if len(div[1].find_all("div", class_="flex items-center mb-4 md:w-[33%]")) == 1:
+    #     num_div = div[1].find("div", class_="flex items-center mb-4 md:w-[33%]")
+    #     num_of_employee = num_div.find("p", class_="text-14").get_text(" ", strip=True)
+    # elif len(div[1].find_all("div", class_="flex items-center mb-4 md:w-[33%]")) == 2:
+    #     num_div = div[1].find_all("div", class_="flex items-center mb-4 md:w-[33%]")
+    #     num_of_employee = (
+    #         num_div[1].find("p", class_="text-14").get_text(" ", strip=True)
+    #     )
+    return "10"
 
 
 def get_Exp_24(source):
     div = source.find_all("div", class_="flex items-center mb-4 w-full md:w-[33%]")
-    return div[2].find("p", class_="text-14").get_text(" ", strip=True)
+    return div[1].find("p", class_="text-14").get_text(" ", strip=True)
 
 
 def get_level_24(source):
-    div = source.find_all(
-        "div", class_="jsx-d84db6a84feb175e md:flex md:border-b border-[#DDD6FE] mb-4"
-    )
-    divv = div[0].find_all("div", class_="flex items-center mb-4 md:w-[33%]")
-    if len(div[0].find_all("div", class_="flex items-center mb-4 md:w-[33%]")) == 2:
-        div_level = divv[1]
-        level = div_level.find("p", class_="text-14").get_text(" ", strip=True)
-    elif len(div[0].find_all("div", class_="flex items-center mb-4 md:w-[33%]")) == 3:
-        div_level = divv[2]
-        level = div_level.find("p", class_="text-14").get_text(" ", strip=True)
-    return level
+    # div = source.find_all(
+    #     "div", class_="jsx-d84db6a84feb175e md:flex md:border-b border-[#DDD6FE] mb-4"
+    # )
+    # div = div[0].find_all("div", class_="flex items-center mb-4 md:w-[33%]")
+    # if len(div[0].find_all("div", class_="flex items-center mb-4 md:w-[33%]")) == 2:
+    #     div_level = div[1]
+    #     level = div_level.find("p", class_="text-14").get_text(" ", strip=True)
+    # elif len(div[0].find_all("div", class_="flex items-center mb-4 md:w-[33%]")) == 3:
+    #     div_level = div[2]
+    #     level = div_level.find("p", class_="text-14").get_text(" ", strip=True)
+    return "Intern"
 
 
 def get_Salary_24(source):
@@ -69,7 +69,7 @@ def get_Edu_24(source):
 def get_Requirement_24(source):
     div = source.find_all(
         "div",
-        class_="jsx-d84db6a84feb175e mb-2 text-14 break-words text-se-neutral-80 text-description",
+        class_="jsx-5b2773f86d2f74b mb-2 text-14 break-words text-se-neutral-80 text-description",
     )
     return div[1].get_text(" ", strip=True)
 
@@ -77,13 +77,13 @@ def get_Requirement_24(source):
 def get_Description_24(source):
     div = source.find_all(
         "div",
-        class_="jsx-d84db6a84feb175e mb-2 text-14 break-words text-se-neutral-80 text-description",
+        class_="jsx-5b2773f86d2f74b mb-2 text-14 break-words text-se-neutral-80 text-description",
     )
     return div[0].get_text(" ", strip=True)
 
 
 def get_Date_24(source):
-    h2 = source.find_all("h2", class_="ml-3 text-14 md:flex pt-0 md:pt-[5px] my-0")
+    h2 = source.find_all("h2", class_="text-14 leading-6 md:flex pt-0 md:pt-[0px] my-0")
     date_ = h2[1].get_text(" ", strip=True)
     part = date_.find(":")
     return date_[part + 2 :]
@@ -107,22 +107,22 @@ def get_Place_24(source):
     return div_[part + 2 :]
 
 
-def get_probation(source):
-    div = source.find_all(
-        "div", class_="jsx-d84db6a84feb175e md:flex md:border-b border-[#DDD6FE] mb-4"
-    )
-    divv = div[0].find_all("div", class_="flex items-center mb-4 md:w-[33%]")
-    if len(div[0].find_all("div", class_="flex items-center mb-4 md:w-[33%]")) == 3:
-        div_level = divv[1]
-        probation = div_level.find("p", class_="text-14").get_text(" ", strip=True)
-        return probation
-    else:
-        return "None"
+# def get_probation(source):
+#     div = source.find_all(
+#         "div", class_="jsx-5b2773f86d2f74b md:flex md:border-b border-[#DDD6FE] mb-4"
+#     )
+#     div = div[0].find_all("div", class_="flex items-center mb-4 md:w-[33%]")
+#     if len(div[0].find_all("div", class_="flex items-center mb-4 md:w-[33%]")) == 3:
+#         div_level = div[1]
+#         probation = div_level.find("p", class_="text-14").get_text(" ", strip=True)
+#         return probation
+#     else:
+#         return "None"
 
 
 def get_Sex_24(source):
     div = source.find_all(
-        "div", class_="jsx-d84db6a84feb175e md:flex md:border-b border-[#DDD6FE] mb-4"
+        "div", class_="jsx-5b2773f86d2f74b md:flex md:border-b border-[#DDD6FE] mb-4"
     )
     if len(div[1].find_all("div", class_="flex items-center mb-4 md:w-[33%]")) == 2:
         num_div = div[1].find_all("div", class_="flex items-center mb-4 md:w-[33%]")
@@ -132,22 +132,22 @@ def get_Sex_24(source):
         return "None"
 
 
-def get_Way_24(source):
-    div = source.find_all(
-        "div", class_="jsx-d84db6a84feb175e md:flex md:border-b border-[#DDD6FE] mb-4"
-    )
-    way = (
-        div[1]
-        .find("div", class_="flex items-center mb-4 w-full md:w-[33%]")
-        .find("p", class_="text-14")
-        .get_text(" ", strip=True)
-    )
-    return way
+# def get_Way_24(source):
+#     div = source.find_all(
+#         "div", class_="jsx-5b2773f86d2f74b md:flex md:border-b border-[#DDD6FE] mb-4"
+#     )
+#     way = (
+#         div[1]
+#         .find("div", class_="flex items-center mb-4 w-full md:w-[33%]")
+#         .find("p", class_="text-14")
+#         .get_text(" ", strip=True)
+#     )
+#     return way
 
 
 def get_Age_24(source):
     div = source.find_all(
-        "div", class_="jsx-d84db6a84feb175e md:flex md:border-b border-[#DDD6FE] mb-4"
+        "div", class_="jsx-5b2773f86d2f74b md:flex md:border-b border-[#DDD6FE] mb-4"
     )
     if div[2].find("div", class_="flex items-center mb-4 md:w-[33%]"):
         age = (
@@ -161,9 +161,9 @@ def get_Age_24(source):
         return "None"
 
 
-def get_right_24(source):
-    div = source.find_all(
-        "div",
-        class_="jsx-d84db6a84feb175e mb-2 text-14 break-words text-se-neutral-80 text-description",
-    )
-    return div[2].get_text(" ", strip=True)
+# def get_right_24(source):
+#     div = source.find_all(
+#         "div",
+#         class_="jsx-d84db6a84feb175e mb-2 text-14 break-words text-se-neutral-80 text-description",
+#     )
+#     return div[2].get_text(" ", strip=True)

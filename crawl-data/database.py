@@ -9,10 +9,10 @@ def save_data_into_DB(data):
             user=os.getenv("DB_USER"),
             password=os.getenv("DB_PASSWORD"),
             host=os.getenv("DB_HOST"),
-            database="job-management",
+            database=os.getenv("DB_NAME"),
         )
         cursor = connection.cursor()
-        query = "INSERT INTO `job-management`.`crawl_data` (`title`, `company`, `time`, `city`, `age`, `sexual`, `probationTime`, `workWay`, `job`, `place`, `numberEmployees`, `experience`, `level`, `salary`, `education`, `right`, `description`, `requirements`, `deadline`, `images`, `link`, `type`, `major_category_id`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        query = "INSERT INTO `crawl_data` (`title`, `company`, `time`, `city`, `age`, `sexual`, `probationTime`, `workWay`, `job`, `place`, `numberEmployees`, `experience`, `level`, `salary`, `education`, `right`, `description`, `requirements`, `deadline`, `images`, `link`, `type`, `major_category_id`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
         for i in data:
             cursor.execute(query, i)
         connection.commit()
@@ -48,7 +48,7 @@ def get_data_from_DB(my_user, my_password):
             user=os.getenv("DB_USER"),
             password=os.getenv("DB_PASSWORD"),
             host=os.getenv("DB_HOST"),
-            database="job-management",
+            database=os.getenv("DB_NAME"),
         )
         cursor = connection.cursor()
         cursor.execute("SELECT * FROM `crawl_data`")
@@ -61,22 +61,22 @@ def get_data_from_DB(my_user, my_password):
 
 
 # Create database if not exists
-def create_database_if_not_exists(my_user, my_password):
-    try:
-        connection = mysql.connector.connect(
-            user=os.getenv("DB_USER"),
-            password=os.getenv("DB_PASSWORD"),
-            host=os.getenv("DB_HOST"),
-            database="job-management",
-        )
-        cursor = connection.cursor()
-        cursor.execute("SELECT * FROM crawl_data`")
-        data = cursor.fetchall()
-        connection.close()
-        return data
-    except Exception as e:
-        print(f"Error occurred while retrieving data from database: {e}")
-        return []
+# def create_database_if_not_exists(my_user, my_password):
+#     try:
+#         connection = mysql.connector.connect(
+#             user=os.getenv("DB_USER"),
+#             password=os.getenv("DB_PASSWORD"),
+#             host=os.getenv("DB_HOST"),
+#             # database=os.getenv("DB_NAME"),
+#         )
+#         cursor = connection.cursor()
+#         cursor.execute("SELECT * FROM `crawl_data`")
+#         data = cursor.fetchall()
+#         connection.close()
+#         return data
+#     except Exception as e:
+#         print(f"Error occurred while retrieving data from database: {e}")
+#         return []
 
 
 def create_table_if_not_exists():
@@ -85,7 +85,7 @@ def create_table_if_not_exists():
             user=os.getenv("DB_USER"),
             password=os.getenv("DB_PASSWORD"),
             host=os.getenv("DB_HOST"),
-            database="job-management",
+            database=os.getenv("DB_NAME"),
         )
         cursor = connection.cursor()
 
@@ -123,7 +123,6 @@ def create_table_if_not_exists():
         connection.commit()
         print("Table 'crawl_data' has been created or already exists.")
 
-        # Đóng kết nối
         cursor.close()
         connection.close()
 
