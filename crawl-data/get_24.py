@@ -1,13 +1,9 @@
 def get_company_name_24(source):
-    return source.find(
-        "h2", class_="font-normal text-16 text-se-neutral-64 mb-4"
-    ).get_text(" ", strip=True)
+    return source.find("h2", class_="font-normal text-16 text-se-neutral-64 mb-4").get_text(" ", strip=True)
 
 
 def get_title_24(source):
-    return source.find(
-        "h1", class_="font-semibold text-18 md:text-24 leading-snug"
-    ).get_text(" ", strip=True)
+    return source.find("h1", class_="font-semibold text-18 md:text-24 leading-snug").get_text(" ", strip=True)
 
 
 def get_job_24(source):
@@ -56,9 +52,7 @@ def get_level_24(source):
 
 
 def get_Salary_24(source):
-    return source.find("p", class_="font-semibold text-14 text-[#8B5CF6]").get_text(
-        " ", strip=True
-    )
+    return source.find("p", class_="font-semibold text-14 text-[#8B5CF6]").get_text(" ", strip=True)
 
 
 def get_Edu_24(source):
@@ -100,11 +94,19 @@ def get_Time_24(source):
     return time
 
 
-def get_Place_24(source):
-    div = source.find_all("h2", class_="ml-3 text-14 md:flex pt-0 md:pt-[5px] my-0")
-    div_ = div[2].get_text(" ", strip=True)
-    part = div_.find(":")
-    return div_[part + 2 :]
+# def get_City_24(source):
+#     div = source.find_all("h2", class_="ml-3 text-14 md:flex pt-0 md:pt-[5px] my-0")
+#     div_ = div[2].get_text(" ", strip=True)
+#     part = div_.find(":")
+#     return div_[part + 2 :]
+
+def get_City_24(source):
+    div = source.find("div", class_="flex items-center gap-2 sm_cv:items-center")
+    if div:
+        span = div.find("span")
+        if span:
+            return span.get_text(strip=True)
+    return None
 
 
 # def get_probation(source):

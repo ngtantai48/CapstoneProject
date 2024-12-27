@@ -59,7 +59,7 @@ async def crawl_vieclam24h(driver):
     # cookies = pickle.load(open(".\\cookies\\cookies_vieclam24h.pkl", "rb"))
     # for cookie in cookies:
     #     driver.add_cookie(cookie)
-    return await get_vieclam24(driver, 3)
+    return await get_vieclam24(driver, 1)
 
 
 async def _start_vieclam24h():

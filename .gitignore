@@ -1,5 +1,6 @@
 .venv
 .env
+.idea
 page_source.txt
 
 **__pycache__

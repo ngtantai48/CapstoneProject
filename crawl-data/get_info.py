@@ -7,36 +7,36 @@ from database import get_data_from_DB
 from get_24 import (
     get_company_name_24,
     get_title_24,
-    get_job_24,
-    get_headquater_24,
+    # get_job_24,
+    # get_headquater_24,
     get_NumEmployee_24,
     get_Exp_24,
     get_level_24,
     get_Salary_24,
-    get_Edu_24,
-    get_Requirement_24,
-    get_Description_24,
+    # get_Edu_24,
+    # get_Requirement_24,
+    # get_Description_24,
     get_Date_24,
-    get_SrcPic_24,
-    get_Time_24,
-    get_Place_24,
-    get_Age_24,
+    # get_SrcPic_24,
+    # get_Time_24,
+    get_City_24,
+    # get_Age_24,
     # get_probation,
     get_Sex_24,
     # get_Way_24,
     # get_right_24,
 )
 
-# from ai import detect
+from ai import detect
 from urllib.parse import urlparse
 from ws_handler import sio
 
 
 def get_profile_urls_24(driver, url):
     page_source = BeautifulSoup(driver.page_source, "html.parser")
-    with open("page_source.txt", "w", encoding="utf-8") as f:
-        # Ghi dữ liệu vào tệp
-        f.write(str(page_source))
+    # with open("page_source.txt", "w", encoding="utf-8") as f:
+    #     # Ghi dữ liệu vào tệp
+    #     f.write(str(page_source))
     try:
         class_name = "relative lg:h-[115px] w-full flex rounded-sm border lg:mb-3 mb-2 lg:hover:shadow-md !hover:bg-white !bg-[#FFF5E7] border-se-blue-10"
         a = page_source.find_all("a", target="_blank")
@@ -63,57 +63,54 @@ def get_profile_info_24(driver, url):
         driver.get(url)
         sleep(2)
         page_source = BeautifulSoup(driver.page_source, "html.parser")
-        company_name = get_company_name_24(page_source)
         title = get_title_24(page_source)
+        company_name = get_company_name_24(page_source)
+        city = get_City_24(page_source)
         date = get_Date_24(page_source)
-        salary = get_Salary_24(page_source)
-        exp_year = get_Exp_24(
-            page_source
-        )  # sua lai vi tri cho dung de lay yeu cau kinh nghiem
-        level = get_level_24(page_source)
+        # time = convertDateToTimestamp(get_Time_24(page_source))  # new
         num_of_employee = get_NumEmployee_24(page_source)
-        edu = get_Edu_24(page_source)
-        src_pic = str(
-            ({"description": company_name + date, "src": get_SrcPic_24(page_source)})
-        )
+        major_category_id = int(detect(title))
+        salary = get_Salary_24(page_source)
+        level = get_level_24(page_source)
+        exp_year = get_Exp_24(page_source)  # sua lai vi tri cho dung de lay yeu cau kinh nghiem
         link = get_main_url(url)
-        head_quater = get_headquater_24(page_source)
-        description = get_Description_24(page_source)
-        requirement = get_Requirement_24(page_source)
-        job = get_job_24(page_source)
-        time = convertDateToTimestamp(get_Time_24(page_source))  # new
-        age = get_Age_24(page_source)
-        sex = get_Sex_24(page_source)
-        # place = get_Place_24(page_source)
+        type = "vieclam24h"
+        # src_pic = str(({"description": company_name + date, "src": get_SrcPic_24(page_source)}))
+        # edu = get_Edu_24(page_source)
+        # head_quater = get_headquater_24(page_source)
+        # description = get_Description_24(page_source)
+        # requirement = get_Requirement_24(page_source)
+        # job = get_job_24(page_source)
+        # age = get_Age_24(page_source)
+        # sex = get_Sex_24(page_source)
         # probation = get_probation(page_source)
         # way = get_Way_24(page_source)
         # right = get_right_24(page_source)
-        type = "vieclam24h"
-        # major_category_id = int(detect(title))
+
         return [
             title,
             company_name,
-            time,
-            # place,
-            age,
-            sex,
-            # probation,
-            # way,
-            job,
-            head_quater,
-            num_of_employee,
-            exp_year,
-            level,
-            salary,
-            edu,
-            # right,
-            description,
-            requirement,
+            # time,
+            city,
             date,
-            src_pic,
+            num_of_employee,
+            major_category_id,
+            salary,
+            level,
+            exp_year,
             link,
             type,
-            # major_category_id,
+            # age,
+            # sex,
+            # probation,
+            # way,
+            # job,
+            # head_quater,
+            # edu,
+            # right,
+            # description,
+            # requirement,
+            # src_pic,
         ]
     except Exception as e:
         logger.error(f"Error occurred while scraping data from {url}: {e}")
@@ -150,7 +147,7 @@ async def get_vieclam24(driver, num_pages):
                 info = get_profile_info_24(driver, _url)
                 print(">> Vieclam24:", str(info))
                 await sio.emit("log", str(info))
-                if info == []:
+                if not info:
                     pass
                 else:
                     if not is_duplicated(info, data_DB):

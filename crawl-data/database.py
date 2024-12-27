@@ -9,10 +9,12 @@ def save_data_into_DB(data):
             user=os.getenv("DB_USER"),
             password=os.getenv("DB_PASSWORD"),
             host=os.getenv("DB_HOST"),
-            database=os.getenv("DB_NAME"),
+            database="job-management",
         )
         cursor = connection.cursor()
-        query = "INSERT INTO `crawl_data` (`title`, `company`, `time`, `city`, `age`, `sexual`, `probationTime`, `workWay`, `job`, `place`, `numberEmployees`, `experience`, `level`, `salary`, `education`, `right`, `description`, `requirements`, `deadline`, `images`, `link`, `type`, `major_category_id`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        # query = "INSERT INTO `crawl_data` (`title`, `company`, `time`, `city`, `age`, `sexual`, `probationTime`, `workWay`, `job`, `place`, `numberEmployees`, `experience`, `level`, `salary`, `education`, `right`, `description`, `requirements`, `deadline`, `images`, `link`, `type`, `major_category_id`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        query = "INSERT INTO `crawl_data` (`title`, `company`, `city`, `date`, `numberEmployees`, `major_category_id`, `salary`, `level`, `experience`, `link`, `type`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+
         for i in data:
             cursor.execute(query, i)
         connection.commit()
@@ -48,7 +50,7 @@ def get_data_from_DB(my_user, my_password):
             user=os.getenv("DB_USER"),
             password=os.getenv("DB_PASSWORD"),
             host=os.getenv("DB_HOST"),
-            database=os.getenv("DB_NAME"),
+            database="job-management",
         )
         cursor = connection.cursor()
         cursor.execute("SELECT * FROM `crawl_data`")
@@ -60,7 +62,6 @@ def get_data_from_DB(my_user, my_password):
         return []
 
 
-# Create database if not exists
 # def create_database_if_not_exists(my_user, my_password):
 #     try:
 #         connection = mysql.connector.connect(
@@ -85,7 +86,7 @@ def create_table_if_not_exists():
             user=os.getenv("DB_USER"),
             password=os.getenv("DB_PASSWORD"),
             host=os.getenv("DB_HOST"),
-            database=os.getenv("DB_NAME"),
+            database="job-management",
         )
         cursor = connection.cursor()
 
