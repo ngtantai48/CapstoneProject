@@ -27,7 +27,7 @@ cloudinary.config({
   api_secret: config.CLOUDINARY_API_SECRET,
 });
 
-app.use("/", (req, res) => {
+app.use("/whoami", (req, res) => {
   res.send("CAPSTONE PROJECT - THANHHV!");
 });
 
