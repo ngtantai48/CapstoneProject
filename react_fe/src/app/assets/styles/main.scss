@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+html {
+  scroll-behavior: smooth !important;
+}
+.ant-btn-primary {
+  background-color: #1677ff;
+  &:hover {
+    color: #ffffff;
+  }
+}
+.text-se-neutral-64 {
+  --tw-text-opacity: 1;
+  color: rgba(111, 109, 113, var(--tw-text-opacity));
+}
