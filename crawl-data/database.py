@@ -13,7 +13,7 @@ def save_data_into_DB(data):
         )
         cursor = connection.cursor()
         # query = "INSERT INTO `crawl_data` (`title`, `company`, `time`, `city`, `age`, `sexual`, `probationTime`, `workWay`, `job`, `place`, `numberEmployees`, `experience`, `level`, `salary`, `education`, `right`, `description`, `requirements`, `deadline`, `images`, `link`, `type`, `major_category_id`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-        query = "INSERT INTO `crawl_data` (`title`, `company`, `city`, `date`, `numberEmployees`, `major_category_id`, `salary`, `level`, `experience`, `link`, `type`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        query = "INSERT INTO `crawl_data` (`title`, `company`, `city`, `time`, `numberEmployees`, `major_category_id`, `salary`, `level`, `experience`, `link`, `type`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
         for i in data:
             cursor.execute(query, i)

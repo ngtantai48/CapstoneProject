@@ -17,7 +17,14 @@ from get_info import get_vieclam24
 import database
 
 
-app = FastAPI(title="HANDLE CRAWL DATA")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    print("Starting up the server")
+    yield
+    print("Shutting down the server")
+
+
+app = FastAPI(title="HANDLE CRAWL DATA", lifespan=lifespan)
 executor = concurrent.futures.ThreadPoolExecutor(max_workers=5)
 
 app.add_middleware(
@@ -35,11 +42,6 @@ class CrawlRequest(BaseModel):
 
 sys.path.append(str(Path(__file__).resolve().parent / "utils"))
 facebook = import_module("facebook")
-
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    print("Starting up the server")
 
 
 async def crawl_facebook(driver):
@@ -70,6 +72,7 @@ async def _start_vieclam24h():
     chrome_options.add_argument("--disable-gpu")
     chrome_options.add_argument("--enable-unsafe-swiftshader")
     chrome_options.add_argument("--remote-debugging-port=9222")
+
     try:
         crawl_status = "PROCESSING"
         status_handler.set_status(crawl_status)
