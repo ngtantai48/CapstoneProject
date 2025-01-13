@@ -22,7 +22,7 @@ from get_24 import (
     get_City_24,
     # get_Age_24,
     # get_probation,
-    get_Sex_24,
+    # get_Sex_24,
     # get_Way_24,
     # get_right_24,
 )
@@ -38,7 +38,7 @@ def get_profile_urls_24(driver, url):
     #     # Ghi dữ liệu vào tệp
     #     f.write(str(page_source))
     try:
-        class_name = "relative lg:h-[115px] w-full flex rounded-sm border lg:mb-3 mb-2 lg:hover:shadow-md !hover:bg-white !bg-[#FFF5E7] border-se-blue-10"
+        # class_name = "relative lg:h-[115px] w-full flex rounded-sm border lg:mb-3 mb-2 lg:hover:shadow-md !hover:bg-white !bg-[#FFF5E7] border-se-blue-10"
         a = page_source.find_all("a", target="_blank")
         all_profile_urls = []
         for profile in a:
@@ -66,13 +66,13 @@ def get_profile_info_24(driver, url):
         title = get_title_24(page_source)
         company_name = get_company_name_24(page_source)
         city = get_City_24(page_source)
-        date = get_Date_24(page_source)
+        time = get_Date_24(page_source)
         # time = convertDateToTimestamp(get_Time_24(page_source))  # new
         num_of_employee = get_NumEmployee_24(page_source)
         major_category_id = int(detect(title))
         salary = get_Salary_24(page_source)
         level = get_level_24(page_source)
-        exp_year = get_Exp_24(page_source)  # sua lai vi tri cho dung de lay yeu cau kinh nghiem
+        exp_year = get_Exp_24(page_source)
         link = get_main_url(url)
         type = "vieclam24h"
         # src_pic = str(({"description": company_name + date, "src": get_SrcPic_24(page_source)}))
@@ -92,7 +92,7 @@ def get_profile_info_24(driver, url):
             company_name,
             # time,
             city,
-            date,
+            time,
             num_of_employee,
             major_category_id,
             salary,
@@ -139,11 +139,14 @@ async def get_vieclam24(driver, num_pages):
         while page_start <= num_pages:
             url = f"https://vieclam24h.vn/tim-kiem-viec-lam-nhanh?occupation_ids[]=8&page={page_start}&province_ids[]=136&sort_q="
             print(">>>URL", url)
-            # await sio.emit("log", url)
+            await sio.emit("log", url)
             driver.get(url)
+            print(1111)
             profile_urls = get_profile_urls_24(driver, url)
+            first_five_urls = profile_urls[:5]
+            print(">>>Profile URL: ", first_five_urls)
             data_DB = get_data_from_DB("root", "04082001")
-            for _url in profile_urls:
+            for _url in first_five_urls:
                 info = get_profile_info_24(driver, _url)
                 print(">> Vieclam24:", str(info))
                 await sio.emit("log", str(info))
@@ -154,7 +157,7 @@ async def get_vieclam24(driver, num_pages):
                         print(">> Have Not Exist In DB")
                         data.append(info)
                     else:
-                        print(">> In DB")
+                        print(">> Data already in the DB")
             page_start += 1
         return data
     except Exception as e:

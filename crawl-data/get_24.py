@@ -122,16 +122,16 @@ def get_City_24(source):
 #         return "None"
 
 
-def get_Sex_24(source):
-    div = source.find_all(
-        "div", class_="jsx-5b2773f86d2f74b md:flex md:border-b border-[#DDD6FE] mb-4"
-    )
-    if len(div[1].find_all("div", class_="flex items-center mb-4 md:w-[33%]")) == 2:
-        num_div = div[1].find_all("div", class_="flex items-center mb-4 md:w-[33%]")
-        sex = num_div[0].find("p", class_="text-14").get_text(" ", strip=True)
-        return sex
-    else:
-        return "None"
+# def get_Sex_24(source):
+#     div = source.find_all(
+#         "div", class_="jsx-5b2773f86d2f74b md:flex md:border-b border-[#DDD6FE] mb-4"
+#     )
+#     if len(div[1].find_all("div", class_="flex items-center mb-4 md:w-[33%]")) == 2:
+#         num_div = div[1].find_all("div", class_="flex items-center mb-4 md:w-[33%]")
+#         sex = num_div[0].find("p", class_="text-14").get_text(" ", strip=True)
+#         return sex
+#     else:
+#         return "None"
 
 
 # def get_Way_24(source):
