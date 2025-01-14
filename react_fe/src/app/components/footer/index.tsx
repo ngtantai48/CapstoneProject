@@ -41,7 +41,7 @@ const Footer = () => {
       <div className="container">
         <div className="row">
           <div className="col">
-            <span className="fw-light copyright">Copyright © 2024 - Version 1.0.1</span>
+            <span className="fw-light copyright">Copyright © 2025 - Version 1.0.1</span>
           </div>
           <div className="col-auto">
             <a

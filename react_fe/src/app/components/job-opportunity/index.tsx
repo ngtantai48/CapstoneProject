@@ -85,7 +85,7 @@ const JobOpportunity = () => {
 
   const handleChangeRangeMonth = useCallback((dateString: string | string[]) => {
     if (!dateString) return;
-    const startDate = moment('2024-06');
+    const startDate = moment('2025-01');
     const endDate = moment(dateString);
 
     const periods = endDate.diff(startDate, 'months', true) + 1;
