@@ -9,7 +9,7 @@ def save_data_into_DB(data):
             user=os.getenv("DB_USER"),
             password=os.getenv("DB_PASSWORD"),
             host=os.getenv("DB_HOST"),
-            database="job-management",
+            database="recruitmentforecast-ml",
         )
         cursor = connection.cursor()
         # query = "INSERT INTO `crawl_data` (`title`, `company`, `time`, `city`, `age`, `sexual`, `probationTime`, `workWay`, `job`, `place`, `numberEmployees`, `experience`, `level`, `salary`, `education`, `right`, `description`, `requirements`, `deadline`, `images`, `link`, `type`, `major_category_id`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
@@ -29,7 +29,7 @@ def is_duplicate_data(link):
             user=os.getenv("DB_USER"),
             password=os.getenv("DB_PASSWORD"),
             host=os.getenv("DB_HOST"),
-            database="job-management",
+            database="recruitmentforecast-ml",
         )
         cursor = connection.cursor()
         query = "SELECT * FROM `crawl_data` WHERE `link` = %s"
@@ -50,7 +50,7 @@ def get_data_from_DB(my_user, my_password):
             user=os.getenv("DB_USER"),
             password=os.getenv("DB_PASSWORD"),
             host=os.getenv("DB_HOST"),
-            database="job-management",
+            database="recruitmentforecast-ml",
         )
         cursor = connection.cursor()
         cursor.execute("SELECT * FROM `crawl_data`")

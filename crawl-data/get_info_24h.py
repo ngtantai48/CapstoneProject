@@ -4,7 +4,7 @@ from datetime import datetime
 from selenium.webdriver.chrome.options import Options
 from time import sleep
 from database import get_data_from_DB
-from get_24 import (
+from get_24h import (
     get_company_name_24,
     get_title_24,
     # get_job_24,
@@ -26,7 +26,6 @@ from get_24 import (
     # get_Way_24,
     # get_right_24,
 )
-
 from ai import detect
 from urllib.parse import urlparse
 from ws_handler import sio
@@ -137,13 +136,14 @@ async def get_vieclam24(driver, num_pages):
         page_start = 1
         data = []
         while page_start <= num_pages:
-            url = f"https://vieclam24h.vn/tim-kiem-viec-lam-nhanh?occupation_ids[]=8&page={page_start}&province_ids[]=136&sort_q="
+            # url = f"https://vieclam24h.vn/tim-kiem-viec-lam-nhanh?occupation_ids[]=8&page={page_start}&province_ids[]=136&sort_q="
+            url = f"https://vieclam24h.vn/tim-kiem-viec-lam-nhanh?page={page_start}&sort_q=priority_max%2Cdesc"
             print(">>>URL", url)
             await sio.emit("log", url)
             driver.get(url)
             print(1111)
             profile_urls = get_profile_urls_24(driver, url)
-            first_five_urls = profile_urls[:5]
+            first_five_urls = profile_urls[:10]
             print(">>>Profile URL: ", first_five_urls)
             data_DB = get_data_from_DB("root", "04082001")
             for _url in first_five_urls:

@@ -13,7 +13,7 @@ import concurrent.futures
 from ws_handler import sio, socket_app, status_handler
 from webdriver_manager.chrome import ChromeDriverManager
 from contextlib import asynccontextmanager
-from get_info import get_vieclam24
+from get_info_24h import get_vieclam24
 import database
 
 
@@ -47,9 +47,9 @@ facebook = import_module("facebook")
 async def crawl_facebook(driver):
     driver.get("https://www.facebook.com/login/")
     sleep(3)
-    cookies = pickle.load(open(".\\cookies\\cookies_fb.pkl", "rb"))
-    for cookie in cookies:
-        driver.add_cookie(cookie)
+    # cookies = pickle.load(open(".\\cookies\\cookies_fb.pkl", "rb"))
+    # for cookie in cookies:
+    #     driver.add_cookie(cookie)
     await facebook.get_facebook(
         driver, "https://www.facebook.com/groups/vieclamCNTTDaNang"
     )

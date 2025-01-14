@@ -7,9 +7,7 @@ def get_title_24(source):
 
 
 def get_job_24(source):
-    return source.find("p", class_="text-14 text-se-accent font-semibold").get_text(
-        " ", strip=True
-    )
+    return source.find("p", class_="text-14 text-se-accent font-semibold").get_text(" ", strip=True)
 
 
 def get_headquater_24(source):
@@ -18,18 +16,11 @@ def get_headquater_24(source):
 
 
 def get_NumEmployee_24(source):
-    # div = source.find_all(
-    #     "div", class_="flex items-center mb-4 md:w-[33%]"
-    # )
-    # if len(div[1].find_all("div", class_="flex items-center mb-4 md:w-[33%]")) == 1:
-    #     num_div = div[1].find("div", class_="flex items-center mb-4 md:w-[33%]")
-    #     num_of_employee = num_div.find("p", class_="text-14").get_text(" ", strip=True)
-    # elif len(div[1].find_all("div", class_="flex items-center mb-4 md:w-[33%]")) == 2:
-    #     num_div = div[1].find_all("div", class_="flex items-center mb-4 md:w-[33%]")
-    #     num_of_employee = (
-    #         num_div[1].find("p", class_="text-14").get_text(" ", strip=True)
-    #     )
-    return "10"
+    div = source.find_all("div", class_="jsx-5b2773f86d2f74b md:flex md:border-b border-[#DDD6FE] mb-4")
+    number_employee = div[1].find_all("div", class_="flex items-center mb-4 md:w-[33%]")
+    if number_employee:
+        return number_employee[0].find("p", class_="text-14").get_text(" ", strip=True)
+    return None
 
 
 def get_Exp_24(source):

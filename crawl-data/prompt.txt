@@ -49,8 +49,9 @@ id	title
 46	Chương trình cử nhân chính quy quốc tế
 47	Y sinh
 48	Vật lý
+49  Unknown
 
 
-Phân tích tên ngành nghê và dựa vào bảng major_category để xác định id của ngành học liên quan nhất với vị trí việc làm sau khi tốt nghiệp,
+Phân tích tên ngành nghê và dựa vào bảng major_category để xác định id liên quan nhất với vị trí việc làm 
 nếu không tìm được ngành thích hợp thì trả về 49.
 Công việc:
