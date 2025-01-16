@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 from selenium.webdriver.chrome.options import Options
 from time import sleep
+import os
+import random
 from database import get_data_from_DB
 from get_24h import (
     get_company_name_24,
@@ -26,6 +28,7 @@ from get_24h import (
     # get_Way_24,
     # get_right_24,
 )
+
 # from ai import detect
 from urllib.parse import urlparse
 from ws_handler import sio
@@ -90,7 +93,6 @@ def get_profile_info_24(driver, url):
             title,
             company_name,
             job,
-            # time,
             city,
             time,
             num_of_employee,
@@ -120,14 +122,14 @@ def is_duplicated(info, data):
     try:
         for record in data:
             if (
-                len(record) >= 7 and
-                record[1] == info[0] and
-                record[2] == info[4] and
-                record[3] == info[3] and
-                record[9] == info[1] and
-                record[10] == info[2] and
-                record[13] == info[8] and
-                record[15] == info[6]
+                record[1] == info[0]
+                and record[2] == info[4]
+                and record[3] == info[3]
+                and record[9] == info[1]
+                and record[10] == info[2]
+                and record[13] == info[8]
+                and record[14] == info[7]
+                and record[15] == info[6]
             ):
                 return True
         return False
@@ -135,19 +137,52 @@ def is_duplicated(info, data):
         print(f"Error in is_duplicated: {e}")
         return False
 
+
+# async def get_vieclam24(driver, num_pages):
+#     try:
+#         page_start = 1
+#         data = []
+#         while page_start <= num_pages:
+#             url = f"https://vieclam24h.vn/tim-kiem-viec-lam-nhanh?page={page_start}&sort_q=priority_max%2Cdesc"
+#             print(">>>URL: ", url)
+#             await sio.emit("log", url)
+#             driver.get(url)
+#             profile_urls = get_profile_urls_24(driver, url)
+#             urls = profile_urls[:3]
+#             print(">>>Profile URL: ", urls)
+#             data_DB = get_data_from_DB(os.getenv("DB_USER"), os.getenv("DB_PASSWORD"))
+#             for _url in urls:
+#                 info = get_profile_info_24(driver, _url)
+#                 print(">> Vieclam24h: ", str(info))
+#                 await sio.emit("log", str(info))
+#                 if not info:
+#                     pass
+#                 else:
+#                     if not is_duplicated(info, data_DB):
+#                         print(">> Have Not Exist In DB")
+#                         data.append(info)
+#                     else:
+#                         print(">> Data already in the DB")
+#             page_start += 1
+#         return data
+#     except Exception as e:
+#         print(f"Error occurred while get data 24h: {e}")
+#         return []
+
+
 async def get_vieclam24(driver, num_pages):
     try:
-        page_start = 1
         data = []
-        while page_start <= num_pages:
+        for _ in range(num_pages):
+            page_start = random.randint(1, 50)
             url = f"https://vieclam24h.vn/tim-kiem-viec-lam-nhanh?page={page_start}&sort_q=priority_max%2Cdesc"
             print(">>>URL: ", url)
             await sio.emit("log", url)
             driver.get(url)
             profile_urls = get_profile_urls_24(driver, url)
-            urls = profile_urls[:3]
+            urls = profile_urls[:5]
             print(">>>Profile URL: ", urls)
-            data_DB = get_data_from_DB("root", "04082001")
+            data_DB = get_data_from_DB(os.getenv("DB_USER"), os.getenv("DB_PASSWORD"))
             for _url in urls:
                 info = get_profile_info_24(driver, _url)
                 print(">> Vieclam24h: ", str(info))
@@ -160,7 +195,6 @@ async def get_vieclam24(driver, num_pages):
                         data.append(info)
                     else:
                         print(">> Data already in the DB")
-            page_start += 1
         return data
     except Exception as e:
         print(f"Error occurred while get data 24h: {e}")

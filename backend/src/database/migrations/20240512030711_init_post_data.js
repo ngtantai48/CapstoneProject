@@ -28,8 +28,7 @@ exports.up = function (knex) {
       table.specificType("images", "MEDIUMTEXT");
       table.specificType("link", "MEDIUMTEXT");
       table
-        .integer("crawl_data_id")
-        .unsigned()
+        .uuid("crawl_data_id")
         .references("id")
         .inTable("crawl_data")
         .onDelete("CASCADE");

@@ -93,7 +93,7 @@ def create_table_if_not_exists():
         # Câu lệnh SQL để tạo bảng nếu chưa tồn tại
         create_table_query = """
         CREATE TABLE IF NOT EXISTS crawl_data (
-            id INT AUTO_INCREMENT PRIMARY KEY,
+            id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
             title VARCHAR(255),
             company VARCHAR(255),
             time VARCHAR(100),

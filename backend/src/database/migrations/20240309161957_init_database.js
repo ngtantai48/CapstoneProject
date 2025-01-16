@@ -21,7 +21,7 @@ exports.up = function (knex) {
       table.timestamp("updated_at").defaultTo(knex.fn.now());
     })
     .createTable("crawl_data", function (table) {
-      table.increments("id").primary();
+      table.uuid("id").primary();
       table.specificType("title", "MEDIUMTEXT");
       table.specificType("time", "MEDIUMTEXT");
       table.specificType("city", "MEDIUMTEXT");

@@ -18,12 +18,26 @@ def get_headquater_24(source):
     return div[0].get_text(" ", strip=True)
 
 
+# def get_NumEmployee_24(source):
+#     div = source.find_all("div", class_="jsx-5b2773f86d2f74b md:flex md:border-b border-[#DDD6FE] mb-4")
+#     number_employee = div[1].find_all("div", class_="flex items-center mb-4 md:w-[33%]")
+#     if number_employee:
+#         return number_employee[0].find("p", class_="text-14").get_text(" ", strip=True)
+#     return None
+
+
 def get_NumEmployee_24(source):
-    div = source.find_all("div", class_="jsx-5b2773f86d2f74b md:flex md:border-b border-[#DDD6FE] mb-4")
-    number_employee = div[1].find_all("div", class_="flex items-center mb-4 md:w-[33%]")
-    if number_employee:
-        return number_employee[0].find("p", class_="text-14").get_text(" ", strip=True)
-    return None
+    divs = source.find_all("div", class_="jsx-5b2773f86d2f74b md:flex md:border-b border-[#DDD6FE] mb-4")
+    
+    for div in divs:
+        items = div.find_all("div", class_="flex items-center mb-4 md:w-[33%]")
+        for item in items:
+            label = item.find("p", class_="mr-1 text-se-neutral-64 text-12")
+            if label and label.get_text(" ", strip=True) == "Số lượng tuyển":
+                value = item.find("p", class_="text-14")
+                if value:
+                    return value.get_text(" ", strip=True)
+    return "N/A"
 
 
 def get_Exp_24(source):
@@ -97,9 +111,9 @@ def get_Time_24(source):
 def get_City_24(source):
     div = source.find("div", class_="flex items-center gap-2 sm_cv:items-center")
     if div:
-        span = div.find("span")
-        if span:
-            return span.get_text(strip=True)
+        paragraph = div.find("p", class_="text-14 text-[#414045]")
+        if paragraph:
+            return paragraph.get_text(strip=True, separator=" ")
     return None
 
 
