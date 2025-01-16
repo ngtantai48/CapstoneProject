@@ -12,7 +12,7 @@ import {
   TeamOutlined,
   UserAddOutlined,
 } from '@ant-design/icons';
-import { dateTimeHelper } from '@utils/helpers';
+// import { dateTimeHelper } from '@utils/helpers';
 
 interface Props {
   probationTime: string;
@@ -55,7 +55,7 @@ const PostDetailBody = ({
               <CarryOutOutlined className="w-[32px] h-[32px] min-w-[32px] flex items-center justify-center rounded-full bg-[#EDE9FE] text-[#8B5CF6] text-20 svicon-calendar-day" />
               <h3 className="ml-3">
                 <p className="mr-1 text-se-neutral-64 text-[12px]">Ngày đăng</p>
-                <p className="text-[14px]">{dateTimeHelper.handleConvertTimestampToDate(time)}</p>
+                <p className="text-[14px]">{time ? time : '-'}</p>
               </h3>
             </div>
             <div className="flex items-center mb-4 md:w-[33%] text-start">
@@ -92,7 +92,7 @@ const PostDetailBody = ({
               <AppstoreOutlined className="w-[32px] h-[32px] min-w-[32px] flex items-center justify-center rounded-full bg-[#EDE9FE] text-[#8B5CF6] text-20 svicon-hard-hat" />
               <h3 className="ml-3">
                 <p className="mr-1 text-se-neutral-64 text-[12px]">Hình thức làm việc</p>
-                <p className="text-[14px]">{workWay}</p>
+                <p className="text-[14px]">{workWay ? workWay : '-'}</p>
               </h3>
             </div>
           </div>

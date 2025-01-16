@@ -7,7 +7,7 @@ from database import get_data_from_DB
 from get_24h import (
     get_company_name_24,
     get_title_24,
-    # get_job_24,
+    get_job_24,
     # get_headquater_24,
     get_NumEmployee_24,
     get_Exp_24,
@@ -26,7 +26,7 @@ from get_24h import (
     # get_Way_24,
     # get_right_24,
 )
-from ai import detect
+# from ai import detect
 from urllib.parse import urlparse
 from ws_handler import sio
 
@@ -68,7 +68,7 @@ def get_profile_info_24(driver, url):
         time = get_Date_24(page_source)
         # time = convertDateToTimestamp(get_Time_24(page_source))  # new
         num_of_employee = get_NumEmployee_24(page_source)
-        major_category_id = int(detect(title))
+        # major_category_id = int(detect(title))
         salary = get_Salary_24(page_source)
         level = get_level_24(page_source)
         exp_year = get_Exp_24(page_source)
@@ -79,7 +79,7 @@ def get_profile_info_24(driver, url):
         # head_quater = get_headquater_24(page_source)
         # description = get_Description_24(page_source)
         # requirement = get_Requirement_24(page_source)
-        # job = get_job_24(page_source)
+        job = get_job_24(page_source)
         # age = get_Age_24(page_source)
         # sex = get_Sex_24(page_source)
         # probation = get_probation(page_source)
@@ -89,11 +89,11 @@ def get_profile_info_24(driver, url):
         return [
             title,
             company_name,
+            job,
             # time,
             city,
             time,
             num_of_employee,
-            major_category_id,
             salary,
             level,
             exp_year,
@@ -103,13 +103,13 @@ def get_profile_info_24(driver, url):
             # sex,
             # probation,
             # way,
-            # job,
             # head_quater,
             # edu,
             # right,
             # description,
             # requirement,
             # src_pic,
+            # major_category_id,
         ]
     except Exception as e:
         logger.error(f"Error occurred while scraping data from {url}: {e}")
@@ -117,38 +117,40 @@ def get_profile_info_24(driver, url):
 
 
 def is_duplicated(info, data):
-    for i in data:
-        if (
-            i[1] == info[0]
-            and i[2] == info[1]
-            and i[3] == info[2]
-            and i[4] == info[3]
-            and i[5] == info[4]
-            and i[6] == info[5]
-            and i[7] == info[6]
-        ):
-            return True
-    return False
-
+    try:
+        for record in data:
+            if (
+                len(record) >= 7 and
+                record[1] == info[0] and
+                record[2] == info[4] and
+                record[3] == info[3] and
+                record[9] == info[1] and
+                record[10] == info[2] and
+                record[13] == info[8] and
+                record[15] == info[6]
+            ):
+                return True
+        return False
+    except Exception as e:
+        print(f"Error in is_duplicated: {e}")
+        return False
 
 async def get_vieclam24(driver, num_pages):
     try:
         page_start = 1
         data = []
         while page_start <= num_pages:
-            # url = f"https://vieclam24h.vn/tim-kiem-viec-lam-nhanh?occupation_ids[]=8&page={page_start}&province_ids[]=136&sort_q="
             url = f"https://vieclam24h.vn/tim-kiem-viec-lam-nhanh?page={page_start}&sort_q=priority_max%2Cdesc"
-            print(">>>URL", url)
+            print(">>>URL: ", url)
             await sio.emit("log", url)
             driver.get(url)
-            print(1111)
             profile_urls = get_profile_urls_24(driver, url)
-            first_five_urls = profile_urls[:10]
-            print(">>>Profile URL: ", first_five_urls)
+            urls = profile_urls[:3]
+            print(">>>Profile URL: ", urls)
             data_DB = get_data_from_DB("root", "04082001")
-            for _url in first_five_urls:
+            for _url in urls:
                 info = get_profile_info_24(driver, _url)
-                print(">> Vieclam24:", str(info))
+                print(">> Vieclam24h: ", str(info))
                 await sio.emit("log", str(info))
                 if not info:
                     pass

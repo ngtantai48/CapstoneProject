@@ -7,7 +7,10 @@ def get_title_24(source):
 
 
 def get_job_24(source):
-    return source.find("p", class_="text-14 text-se-accent font-semibold").get_text(" ", strip=True)
+    elements = source.find("p", class_="text-14 text-se-accent font-semibold")
+    result = [element.get_text(" ", strip=True) for element in elements]
+    job = " ".join(result)
+    return job
 
 
 def get_headquater_24(source):
