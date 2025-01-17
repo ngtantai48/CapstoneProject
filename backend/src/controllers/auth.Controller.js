@@ -226,7 +226,7 @@ const sendMail = async (req, res) => {
 
   try {
     const mailOptions = {
-      emailFrom: "vanthanhhuynhtk@gmail.com",
+      emailFrom: "taitynguyen123@gmail.com",
       emailTo: sendEmail.mailTo,
       subject: "Here is your job link",
       text: `Click here:${sendEmail.link}`,

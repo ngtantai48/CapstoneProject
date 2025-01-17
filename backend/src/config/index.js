@@ -2,8 +2,7 @@ require("dotenv").config();
 
 const config = {
   env: "development",
-  DEFAULT_AVATAR:
-    "https://res.cloudinary.com/vth20/image/upload/fl_preserve_transparency/v1658138187/dbhvs4ankmsdsdhkszlp.jpg?_s=public-apps",
+  DEFAULT_AVATAR:"https://res.cloudinary.com/vth20/image/upload/fl_preserve_transparency/v1658138187/dbhvs4ankmsdsdhkszlp.jpg?_s=public-apps",
   CLOUDINARY_NAME: process.env.CLOUDINARY_NAME,
   CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
   CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,

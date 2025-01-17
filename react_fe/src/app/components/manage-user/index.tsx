@@ -31,11 +31,11 @@ const ManageUser = () => {
   const { showConfirm, ConfirmDialog } = useConfirmModal();
   const columns: TableProps<DataType>['columns'] = useMemo(
     () => [
-      {
-        title: 'ID',
-        dataIndex: 'id',
-        key: 'id',
-      },
+      // {
+      //   title: 'ID',
+      //   dataIndex: 'id',
+      //   key: 'id',
+      // },
       {
         title: 'Name',
         dataIndex: 'name',
